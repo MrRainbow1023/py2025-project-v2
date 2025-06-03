@@ -4,3 +4,27 @@ CPU: 6♣ J♣ 9♥ K♥ 8♣ --> High Card (high card: 13)
 
 Winner: Karol
 
+=== New Game (2025-06-03 19:38:22) ===
+Karol: 3♦ 9♠ 11♦ 14♣ 12♣ --> High Card (high card: 14)
+CPU: 4♠ 8♣ 5♦ 12♠ 5♥ --> One Pair (high card: 5)
+
+Winner: CPU
+
+=== New Game (2025-06-03 19:39:23) ===
+Karol: 10♣ 2♦ 5♦ 7♥ 8♠ --> High Card (high card: 10)
+CPU: Q♠ 9♠ J♥ J♠ 6♠ --> One Pair (high card: 11)
+
+Winner: CPU
+
+=== New Game (2025-06-03 19:39:40) ===
+Karol: 3♦ K♠ 6♥ J♠ A♦ --> High Card (high card: 14)
+CPU: 10♠ 2♥ 7♦ 6♣ Q♦ --> High Card (high card: 12)
+
+Winner: Karol
+
+=== New Game (2025-06-03 19:39:41) ===
+Karol: 7♠ 2♥ 4♠ 2♦ 10♠ --> One Pair (high card: 2)
+CPU: A♠ 9♦ 5♠ 10♥ A♥ --> One Pair (high card: 14)
+
+Winner: CPU
+

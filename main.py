@@ -15,17 +15,32 @@ def log_game(filename, players, winner):
 
 
 class Card:
-    unicode_dict = {'s': '\u2660', 'h': '\u2665', 'd': '\u2666', 'c': '\u2663'}  # ♠ ♥ ♦ ♣
+    unicode_dict = {'s': '\u2660', 'h': '\u2665', 'd': '\u2666', 'c': '\u2663'}
+    str_to_rank = {
+        '2': 2, '3': 3, '4': 4, '5': 5,
+        '6': 6, '7': 7, '8': 8, '9': 9,
+        '10': 10, 'J': 11, 'Q': 12, 'K': 13, 'A': 14
+    }
+    valid_suits = ['s', 'h', 'd', 'c']
 
     def __init__(self, rank, suit):
+        if isinstance(rank, str):
+            rank = self.str_to_rank.get(rank)
+        if rank not in range(2, 15):
+            raise ValueError(f"Invalid card rank: {rank}")
+        if suit not in self.valid_suits:
+            raise ValueError(f"Invalid card suit: {suit}")
+
         self.rank = rank
         self.suit = suit
 
     def get_value(self):
-        return (self.rank, self.suit)
+        rank_str = {11: 'J', 12: 'Q', 13: 'K', 14: 'A'}.get(self.rank, str(self.rank))
+        return (rank_str, self.suit)
 
     def __str__(self):
-        return f"{self.rank}{Card.unicode_dict[self.suit]}"
+        rank_str = {11: 'J', 12: 'Q', 13: 'K', 14: 'A'}.get(self.rank, str(self.rank))
+        return f"{rank_str}{Card.unicode_dict[self.suit]}"
 
 
 class Deck:
@@ -41,10 +56,13 @@ class Deck:
         random.shuffle(self.cards)
 
     def deal(self, players, cards_per_player=5):
-        for i in range(cards_per_player):
+        total_needed = len(players) * cards_per_player
+        if total_needed > len(self.cards):
+            raise ValueError("Not enough cards in the deck to deal.")
+
+        for _ in range(cards_per_player):
             for player in players:
-                if self.cards:  # zabezpieczenie
-                    player.take_card(self.cards.pop(0))
+                player.take_card(self.cards.pop(0))
 
 
 class Player:
@@ -75,10 +93,7 @@ class Player:
 
     def hand_rank(self):
         ranks = [card.rank for card in self.__hand_]
-
-        rank_values = {'2': 2, '3': 3, '4': 4, '5': 5, '6': 6, '7': 7,
-                       '8': 8, '9': 9, '10': 10, 'J': 11, 'Q': 12, 'K': 13, 'A': 14}
-        values = [rank_values[r] for r in ranks]
+        values = ranks  # już są liczbami
         count = Counter(values)
         counts = count.values()
         most_common = count.most_common()
@@ -123,7 +138,7 @@ def main():
             best_rank = current_rank
             winner = p
 
-    print(f"\n🏆 Winner: {winner.get_name()} with {winner.hand_rank()[2]}!\n")
+    print(f"\nWinner: {winner.get_name()} with {winner.hand_rank()[2]}!\n")
 
     # Zapisz log do pliku
     log_game("game_log.txt", players, winner)
