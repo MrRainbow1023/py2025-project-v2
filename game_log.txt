@@ -1,0 +1,6 @@
+=== New Game (2025-06-03 15:49:02) ===
+Karol: 6♠ 3♥ 9♣ K♦ 10♦ --> High Card (high card: 13)
+CPU: 6♣ J♣ 9♥ K♥ 8♣ --> High Card (high card: 13)
+
+Winner: Karol
+

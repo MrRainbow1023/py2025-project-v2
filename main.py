@@ -1,5 +1,18 @@
 import random
 from collections import Counter
+from datetime import datetime
+
+
+def log_game(filename, players, winner):
+    now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    with open(filename, "a", encoding="utf-8") as file:
+        file.write(f"=== New Game ({now}) ===\n")
+        for p in players:
+            rank_value, high_card, rank_name = p.hand_rank()
+            file.write(f"{p.get_name()}: {p.cards_to_str()} --> {rank_name} (high card: {high_card})\n")
+        file.write(f"\nWinner: {winner.get_name()}\n\n")
+
 
 class Card:
     unicode_dict = {'s': '\u2660', 'h': '\u2665', 'd': '\u2666', 'c': '\u2663'}  # ♠ ♥ ♦ ♣
@@ -86,7 +99,7 @@ class Player:
 
 
 # -------------------- MAIN --------------------
-if __name__ == "__main__":
+def main():
     deck = Deck()
     deck.shuffle()
 
@@ -96,7 +109,25 @@ if __name__ == "__main__":
 
     deck.deal(players, cards_per_player=5)
 
+    print("Hands:")
+    best_rank = (-1, -1)
+    winner = None
 
-    for player in players:
-        print(f"{player.get_name()}: {player.cards_to_str()}")
-        print(f"Hand rank: {player.hand_rank()}")
+    for p in players:
+        print(f"{p.get_name()}: {p.cards_to_str()}")
+        rank_value, high_card, rank_name = p.hand_rank()
+        print(f"  ⤷ Hand: {rank_name} (high card: {high_card})")
+
+        current_rank = (rank_value, high_card)
+        if current_rank > best_rank:
+            best_rank = current_rank
+            winner = p
+
+    print(f"\n🏆 Winner: {winner.get_name()} with {winner.hand_rank()[2]}!\n")
+
+    # Zapisz log do pliku
+    log_game("game_log.txt", players, winner)
+
+
+if __name__ == "__main__":
+    main()
